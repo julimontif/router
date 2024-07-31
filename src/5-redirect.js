@@ -1,14 +1,16 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom"
+import { Routes, Route, Link, Navigate } from "react-router-dom"
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search)
+const Portafolio = () => {
+  const loggedIn = false
+
+  if (!loggedIn) {
+    return <Navigate to="/" />
+  }
+
+  return <h1>Portafolio</h1>
 }
 
 function App() {
-  const query = useQuery()
-  const chancho = query.get("chanchito")
-  const nombre = query.get("nombre")
-  console.log({chancho, nombre})
   return (
     <div>
       <nav>
@@ -19,13 +21,20 @@ function App() {
           <li>
             <Link to="/perfil">Perfil</Link>
           </li>
+          <li>
+            <Link to="/portafolio">Portafolio</Link>
+          </li>
         </ul>
       </nav>
       <section>
         <Routes>
           <Route path="/" element={<h1>Inicio</h1>}/>
           <Route path="/perfil" element={<h1>Perfil</h1>}/>
-          <Route path="*" element={"404: ruta no encontrada"}/>
+          <Route path="/portafolio" element={<Portafolio />}/>
+          <Route
+          path="/"
+          element={<Navigate replace to="/inicio" />}
+          />
         </Routes>
       </section>
     </div>
